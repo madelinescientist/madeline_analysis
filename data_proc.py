@@ -72,7 +72,7 @@ def merge_tiffs_obsolete(fls, outpath, num=1, tifn='bigtif{}.tif', memmap=True):
 def merge_tiffs(fls, outpath, num=1, fmm='bigmem', tifn='mergetif{}.tif', order='F', del_mmap=True):
     # Takes in a list of single tiff fls and save them in memmap
     imgs = tifffile.TiffSequence(fls)
-    totlen = imgs.shape[0]
+    totlen = len(imgs.files)
     dims = imgs.imread(imgs.files[0]).shape
     d3 = dims[2] if len(dims) == 3 else 1
     d1, d2 = dims[0], dims[1]
