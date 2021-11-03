@@ -50,7 +50,7 @@ def caiman_main(fr, fnames, out, z=0, dend=False):
     else:
         gSig = [3, 3]  # expected half size of neurons
         init_method = 'greedy_roi'  # initialization method (if analyzing dendritic data using 'sparse_nmf')
-        alpha_snmf = None  # sparsity penalty for dendritic data analysis through sparse NMF
+        alpha_snmf = 100  # sparsity penalty for dendritic data analysis through sparse NMF
 
     # parameters for component evaluation
     min_SNR = 2.5  # signal to noise ratio for accepting a component
