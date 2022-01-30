@@ -21,44 +21,20 @@ output_file(str): default name of output file
     * Should end in '.hdf5'
 fr(int): default framerate
 """
-root_input_folder = 'F:/madeline_data/'
+root_input_folder = '\\\\filenest.diskstation.me\\Wilbrecht_file_server\\Madeline\\raw_imaging'
 input_folders = {
-    'F:/madeline_data/2021-07-15/8F1-001',
-    'F:/madeline_data/2021-07-15/8F1-002',
-    'F:/madeline_data/2021-07-15/8F1-003',
-    'F:/madeline_data/2021-07-15/8F1-004',
-    'F:/madeline_data/2021-07-15/8F1-005',
-    'F:/madeline_data/2021-07-15/8F1-006',
-    'F:/madeline_data/2021-07-15/8F2-001',
-    'F:/madeline_data/2021-07-15/8F2-002',
-    'F:/madeline_data/2021-07-16/8F2-001-1',
-    'F:/madeline_data/2021-07-23/8F2-15min-018',
-    'F:/madeline_data/2021-08-06/20x_objective-001',
-    'F:/madeline_data/2021-08-28/8PRT-20xobjective-001',
-    'F:/madeline_data/2021-09-17',
-    'F:/madeline_data/JUV008/2021-10-31/JUV008-211031-gonogo-001',
-    'F:/madeline_data/JUV008/2021-11-01/JUV008-211101-gonogo-001',
-    'F:/madeline_data/JUV008/2021-11-02/JUV008-211102-005',
-    'F:/madeline_data/JUV008/2021-11-02/JUV008-211102-gonogo-001',
-    'F:/madeline_data/JUV008/2021-11-02/JUV008-211102-gonogo-002',
-    'F:/madeline_data/JUV008/2021-11-02/JUV008-211102-gonogo-003',
-    'F:/madeline_data/JUV008/2021-11-02/TSeries-11022021-1414-004',
-    'F:/madeline_data/JUV008/2021-11-03/JUV008-211103-gonogo-001',
-    'F:/madeline_data/JUV008/2021-11-04/JUV008-211104-gonogo-001',
-    'F:/madeline_data/JUV008/2021-11-04/JUV008-211104-gonogo-002',
-    'F:/madeline_data/JUV008/2021-11-05/JUV008-211105-gonogo-001',
-    'F:/madeline_data/JUV009/2021-10-31/JUV009-211031-gonogo-001',
-    'F:/madeline_data/JUV009/2021-11-01/JUV009-211101=gonogo-001',
-    'F:/madeline_data/JUV009/2021-11-02/JUV009-211102-gonogo-001',
-    'F:/madeline_data/JUV009/2021-11-03/JUV009-211103-gonogo-001',
-    'F:/madeline_data/JUV009/2021-11-04/JUV009-211104-gonogo-001',
-    'F:/madeline_data/JUV009/2021-11-04/JUV009-211104-gonogo-002',
-    'F:/madeline_data/JUV009/2021-11-06/JUV009-211106-gonogo-001',
-    'F:/madeline_data/JUV009/2021-11-07/JUV009-211107-gonogo-001',
-    'F:/madeline_data/JUV009/2021-11-07/JUV009-211107-gonogo-002',
-    'F:/madeline_data/JUV009/2021-11-08/JUV009-211108-gonogo-001'
+    '\\\\filenest.diskstation.me\\Wilbrecht_file_server\\Madeline\\raw_imaging\\JUV010\\JUV010-211215-gonogo-001',
+    '\\\\filenest.diskstation.me\\Wilbrecht_file_server\\Madeline\\raw_imaging\\JUV010\\JUV010-211215-gonogo-002',
+    '\\\\filenest.diskstation.me\\Wilbrecht_file_server\\Madeline\\raw_imaging\\JUV010\\JUV010-211215-gonogo-003',
+    '\\\\filenest.diskstation.me\\Wilbrecht_file_server\\Madeline\\raw_imaging\\JUV010\\JUV010-211216-gonogo-001',
+    '\\\\filenest.diskstation.me\\Wilbrecht_file_server\\Madeline\\raw_imaging\\JUV010\\JUV010-211216-gonogo-002',
+    '\\\\filenest.diskstation.me\\Wilbrecht_file_server\\Madeline\\raw_imaging\\JUV010\\JUV010-211217-gonogo-001',
+    '\\\\filenest.diskstation.me\\Wilbrecht_file_server\\Madeline\\raw_imaging\\JUV011\\JUV011-211214-gonogo-001',
+    '\\\\filenest.diskstation.me\\Wilbrecht_file_server\\Madeline\\raw_imaging\\JUV011\\JUV011-211215-gonogo-001',
+    '\\\\filenest.diskstation.me\\Wilbrecht_file_server\\Madeline\\raw_imaging\\JUV011\\JUV011-211216-gonogo-001',
+    '\\\\filenest.diskstation.me\\Wilbrecht_file_server\\Madeline\\raw_imaging\\JUV011\\JUV011-211217-gonogo-001',
 }
-output_folder = 'F:/madeline_data_output'
+output_folder = 'C:/Users/right/Desktop/lab/hard drive/madeline_data_output_2'
 fr = 4
 
 gui_enable = False
@@ -73,16 +49,16 @@ if gui_enable:
     root_input_folder, output_folder, fr = gui_input
     print('--successful gui input--')
 
-# ensure root and output folders exist
-while not os.path.exists(root_input_folder):
-    time.sleep(1)
-print('--found input folder--')
+# ensure output folder exists
 while not os.path.exists(output_folder):
     time.sleep(1)
 print('--found output folder--')
 
 # folder scan starting at root input folder
 if folder_scan_enable:
+    while not os.path.exists(root_input_folder):
+        time.sleep(1)
+    print('--found input folder--')
     input_folders = scan_folder(root_input_folder)
     print('--successful folder scan--')
 
