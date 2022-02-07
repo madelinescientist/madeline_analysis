@@ -95,9 +95,11 @@ def merge_tiffs(fls, outpath, num=1, fmm='bigmem', tifn='mergetif{}.tif', order=
         fnames.append(fname)
         endpoint = chunklen * (j+1)
         if endpoint >= totlen:
-            io.imsave(fname, bigmem[chunklen * j:], plugin='tifffile')
+            tifffile.imsave(fname, bigmem[chunklen * j:], imagej=True)
+            #io.imsave(fname, bigmem[chunklen * j:], plugin='tifffile')
         else:
-            io.imsave(fname, bigmem[chunklen * j: endpoint], plugin='tifffile')
+            tifffile.imsave(fname, bigmem[chunklen * j: endpoint], imagej=True)
+            #io.imsave(fname, bigmem[chunklen * j: endpoint], plugin='tifffile')
     # Delete mmap
     try:
         if del_mmap:
