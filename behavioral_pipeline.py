@@ -137,6 +137,13 @@ class GoNogoBehaviorMat(BehaviorMat):
 
         return result_df
 
+    def output_df(self, outfile, file_type='csv'):
+        """
+        saves the output of to_df() as a file of the specified type
+        """
+        if file_type == 'csv':
+            self.to_df().to_csv(outfile + '.csv')
+
     def time_aligner(self):
         # TODO: Implement
         pass
@@ -148,4 +155,6 @@ if __name__ == "__main__":
     input_folder = fr"\\filenest.diskstation.me\Wilbrecht_file_server\Madeline\processed_data\{animal}\{session}"
     input_file = fr"{animal}_{session}_behaviorLOG.mat"
     x = GoNogoBehaviorMat(animal, session, os.path.join(input_folder, input_file))
+    output_file = f"{animal}_{session}_behavior_output"
+    x.output_df(os.path.join(input_folder, output_file))
 
