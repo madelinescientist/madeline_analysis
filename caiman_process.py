@@ -4,9 +4,9 @@ from caiman.motion_correction import MotionCorrect
 from caiman.source_extraction.cnmf.utilities import detrend_df_f
 from caiman.components_evaluation import estimate_components_quality_auto
 import numpy as np
-import h5py,os, time
+import h5py, os, time
 
-def caiman_main(fr, fnames, out, z=0, dend=False):
+def caiman_main(fr, fnames, out, K=25, rf=25, stride_cnmf=10, z=0, dend=False):
     # modified from https://github.com/senis000/CaBMI_analysis
     """
     Main function to compute the caiman algorithm. For more details see github and papers
@@ -20,6 +20,7 @@ def caiman_main(fr, fnames, out, z=0, dend=False):
     F_dff(array): array with the dff of the components
     com(array): matrix with the position values of the components as given by caiman
     cnm(struct): struct with different stimates and returns from caiman"""
+    print("K", K, "rf", rf, "stride_cnmf", stride_cnmf)
 
     # parameters
     decay_time = 0.4  # length of a typical transient in seconds
@@ -27,7 +28,7 @@ def caiman_main(fr, fnames, out, z=0, dend=False):
     # Look for the best parameters for this 2p system and never change them again :)
     # motion correction parameters
     niter_rig = 1  # number of iterations for rigid motion correction
-    max_shifts = (3, 3)  # maximum allow rigid shift
+    max_shifts = (4, 4)  # maximum allow rigid shift
     splits_rig = 10  # for parallelization split the movies in  num_splits chuncks across time
     strides = (96, 96)  # start a new patch for pw-rigid motion correction every x pixels
     overlaps = (48, 48)  # overlap between pathes (size of patch strides+overlaps)
@@ -39,16 +40,16 @@ def caiman_main(fr, fnames, out, z=0, dend=False):
     p = 1  # order of the autoregressive system
     gnb = 2  # number of global background components
     merge_thresh = 0.8  # merging threshold, max correlation allowed
-    rf = 25  # half-size of the patches in pixels. e.g., if rf=25, patches are 50x50
-    stride_cnmf = 10  # amount of overlap between the patches in pixels
-    K = 25  # number of components per patch
+    # rf = 25  # half-size of the patches in pixels. e.g., if rf=25, patches are 50x50
+    # stride_cnmf = 10  # amount of overlap between the patches in pixels
+    # K = 25  # number of components per patch
 
     if dend:
         gSig = [1, 1]  # expected half size of neurons
         init_method = 'sparse_nmf'  # initialization method (if analyzing dendritic data using 'sparse_nmf')
         alpha_snmf = 1e-6  # sparsity penalty for dendritic data analysis through sparse NMF
     else:
-        gSig = [3, 3]  # expected half size of neurons
+        gSig = [4, 4]  # expected half size of neurons
         init_method = 'greedy_roi'  # initialization method (if analyzing dendritic data using 'sparse_nmf')
         alpha_snmf = 100  # sparsity penalty for dendritic data analysis through sparse NMF
 
