@@ -23,7 +23,7 @@ def caiman_main(fr, fnames, out, K=25, rf=25, stride_cnmf=10, z=0, dend=False):
     print("K", K, "rf", rf, "stride_cnmf", stride_cnmf)
 
     # parameters
-    decay_time = 0.4  # length of a typical transient in seconds
+    decay_time = 1.25  # length of a typical transient in seconds
 
     # Look for the best parameters for this 2p system and never change them again :)
     # motion correction parameters
