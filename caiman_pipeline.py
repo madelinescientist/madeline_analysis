@@ -27,11 +27,10 @@ input_folders: subfolders of root that contain independent trial data
 output_folder: folder to save output file(s)
 """
 root_input_folder = r'\\filenest.diskstation.me\Wilbrecht_file_server\Madeline\raw_imaging'
-input_folders = {
+input_folders = [
     r'JUV011\JUV011-211215-gonogo-001'
-}
-output_folder = r'C:\Users\right\Desktop\lab\hard drive\madeline_data_output_3'
-
+]
+output_folder = r'C:\Users\right\Desktop\lab\hard drive\madeline_data_output_4'
 
 """
 CaImAn Parameters:
@@ -98,7 +97,8 @@ for input_folder in input_folders:
             print('--merged tiff file already found! skipping merge')
         else:
             print('--begin merging tiff files--')
-            outfile = merge_tiffs(input_folder, output_folder, tifn=tif_name)
+            merge_files = [os.path.join(input_folder, f) for f in os.listdir(input_folder) if ('.tif' in f)]
+            outfile = merge_tiffs(merge_files, output_folder, tifn=tif_name)
             print('--tiff files merged--')
 
             # clean mmap files
