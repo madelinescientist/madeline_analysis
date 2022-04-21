@@ -70,7 +70,7 @@ class GoNogoBehaviorMat(BehaviorMat):
     for i in range(1, 17):
         code_map[(700 + i) / 100] = ('sound_on', str(i))
 
-    fields = ['onset_time', 'first_lick_in_time', 'last_lick_out_time', 'water_valve_on_time', 'outcome_time']
+    fields = ['onset', 'first_lick_in', 'last_lick_out', 'water_valve_on', 'outcome']
 
     time_unit = 's'
 
@@ -122,20 +122,20 @@ class GoNogoBehaviorMat(BehaviorMat):
         result_df['go_nogo'] = pd.Categorical([""] * self.trialN, ['go', 'nogo'], ordered=False)
         result_df['licks_out'] = np.full((self.trialN, 1), 0)
         result_df['quality'] = pd.Categorical(["normal"] * self.trialN, ['missed', 'abort', 'normal'], ordered=False)
-        result_df['water_valve_on'] = pd.Categorical([""] * self.trialN, [1, 2, 3], ordered=False)
+        result_df['water_valve_amt'] = pd.Categorical([""] * self.trialN, [1, 2, 3], ordered=False)
 
         for node in self.eventlist:
-            if np.isnan(result_df.loc[node.trial_index(), 'onset_time']):
-                result_df.loc[node.trial_index(), 'onset_time'] = node.etime
+            if np.isnan(result_df.loc[node.trial_index(), 'onset']):
+                result_df.loc[node.trial_index(), 'onset'] = node.etime
 
             if node.event in 'in':
-                if np.isnan(result_df.loc[node.trial_index(), 'first_lick_in_time']):
-                    result_df.loc[node.trial_index(), 'first_lick_in_time'] = node.etime
+                if np.isnan(result_df.loc[node.trial_index(), 'first_lick_in']):
+                    result_df.loc[node.trial_index(), 'first_lick_in'] = node.etime
             if node.event in 'out':
-                result_df.loc[node.trial_index(), 'last_lick_out_time'] = node.etime
+                result_df.loc[node.trial_index(), 'last_lick_out'] = node.etime
                 result_df.loc[node.trial_index(), 'licks_out'] += 1
             elif node.event == 'outcome':
-                result_df.loc[node.trial_index(), 'outcome_time'] = node.etime
+                result_df.loc[node.trial_index(), 'outcome'] = node.etime
                 outcome = self.code_map[node.ecode][1]
                 # quality
                 if outcome in ['missed', 'abort']:
@@ -155,8 +155,8 @@ class GoNogoBehaviorMat(BehaviorMat):
                 result_df.loc[node.trial_index(), 'sound_num'] = int(self.code_map[node.ecode][1])
             elif node.event == 'water_valve':
                 num_reward = self.code_map[node.ecode][1]
-                result_df.loc[node.trial_index(), 'water_valve_on'] = int(num_reward)
-                result_df.loc[node.trial_index(), 'water_valve_on_time'] = node.etime
+                result_df.loc[node.trial_index(), 'water_valve_amt'] = int(num_reward)
+                result_df.loc[node.trial_index(), 'water_valve_on'] = node.etime
 
         return result_df
 
