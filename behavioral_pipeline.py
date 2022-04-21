@@ -7,6 +7,29 @@ import os
 
 from behavior_base import PSENode, EventNode
 
+# From matlab file get_Headfix_GoNo_EventTimes.m:
+# % eventID=1:    2P imaging frame TTL high
+# % eventID=2:    2P imaging frame TTL low
+# % eventID=3:    left lick in
+# % eventID=4:    left lick out
+# % eventID=44:   Last left lick out
+# % eventID=5:    right lick 1n
+# % eventID=6:    right lick out
+# % eventID=66:   Last right lick out
+# % eventID=7.01:  new trial, Sound 1 ON
+# % eventID=7.02:  new trial, Sound 2 ON
+# % eventID=7.0n:  new trial, Sound n ON
+# % eventID=7.16:  new trial, Sound 16 ON
+# % eventID=81.01: Correct No-Go (no-lick), unrewarded outcome
+# % eventID=81.02: Correct Go (lick), unrewarded outcome
+# % eventID=81.12: Correct Go (lick), 1 drop rewarded after direct delivery
+# % eventID=81.22: Correct Go (lick), 2 drops rewarded (valve on)
+# % eventID=82:02  False Go (lick), white noise on
+# % eventID=83:    Missed to respond
+# % eventID=84:    Aborted outcome
+# % eventID=9.01:  Water Valve on 1 time (1 reward)
+# % eventID=9.02:  Water Valve on 2 times (2 rewards)
+# % eventID=9.03:  Water Valve on 3 times (3 rewards)
 
 class BehaviorMat:
     code_map = {}
