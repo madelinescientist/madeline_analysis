@@ -59,7 +59,7 @@ class GoNogoBehaviorMat(BehaviorMat):
         81.02: ('outcome', 'go_correct_unrewarded'),
         81.12: ('outcome', 'go_correct_reward1'),
         81.22: ('outcome', 'go_correct_reward2'),
-        82.02: ('outcome', 'go_incorrect'),
+        82.02: ('outcome', 'no-go_incorrect'),
         83: ('outcome', 'missed'),
         84: ('outcome', 'abort'),
         9.01: ('water_valve', '1'),
@@ -125,13 +125,15 @@ class GoNogoBehaviorMat(BehaviorMat):
         result_df['water_valve_amt'] = pd.Categorical([""] * self.trialN, [1, 2, 3], ordered=False)
 
         for node in self.eventlist:
-            if np.isnan(result_df.loc[node.trial_index(), 'onset']):
+            # New tone signifies a new trial
+            if node.event == 'sound_on':
                 result_df.loc[node.trial_index(), 'onset'] = node.etime
+                result_df.loc[node.trial_index(), 'sound_num'] = int(self.code_map[node.ecode][1])
 
-            if node.event in 'in':
+            elif node.event == 'in':
                 if np.isnan(result_df.loc[node.trial_index(), 'first_lick_in']):
                     result_df.loc[node.trial_index(), 'first_lick_in'] = node.etime
-            if node.event in 'out':
+            elif node.event == 'out':
                 result_df.loc[node.trial_index(), 'last_lick_out'] = node.etime
                 result_df.loc[node.trial_index(), 'licks_out'] += 1
             elif node.event == 'outcome':
@@ -151,8 +153,6 @@ class GoNogoBehaviorMat(BehaviorMat):
                     result_df.loc[node.trial_index(), 'go_nogo'] = 'go'
                 elif outcome.startswith('no-go'):
                     result_df.loc[node.trial_index(), 'go_nogo'] = 'nogo'
-            elif node.event == 'sound_on':
-                result_df.loc[node.trial_index(), 'sound_num'] = int(self.code_map[node.ecode][1])
             elif node.event == 'water_valve':
                 num_reward = self.code_map[node.ecode][1]
                 result_df.loc[node.trial_index(), 'water_valve_amt'] = int(num_reward)
