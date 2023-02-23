@@ -2,6 +2,8 @@ import tifffile, os
 import numpy as np
 from skimage import io
 
+# comment
+
 def merge_tiffs(fls, reps, outpath, decay=1.0, fmm='bigmem', tifn='merge', order='F', del_mmap=True):
     # Takes in a list of single tiff fls and save them in memmap
 
